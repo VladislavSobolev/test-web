@@ -1,6 +1,9 @@
 package pages;
 
 
+
+import io.qameta.allure.Attachment;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -26,15 +29,19 @@ public class EditPage extends AbstractPage{
     @FindBy(xpath = "(//*[@class=' form-control'])[4]")
     private WebElement description;
 
-
+    @Step("Собираем данные тикета")
     public void buildTicket(){
         ticket.add(title.getAttribute("value"));
         ticket.add(description.getText());
         ticket.add(email.getAttribute("value"));
+        saveScreenshot();
     }
 
+
+    @Step("Возвращаем тикет")
     public ArrayList<String> getTicket(){
         return ticket;
     }
+
 
 }
