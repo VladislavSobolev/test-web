@@ -1,17 +1,25 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+
+import io.qameta.allure.Attachment;
+import io.qameta.allure.Step;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import ru.yandex.qatools.ashot.AShot;
+import ru.yandex.qatools.ashot.Screenshot;
+import ru.yandex.qatools.ashot.shooting.ShootingStrategy;
+
+import java.awt.*;
+import java.awt.image.ColorModel;
+
 
 // Элементы общие для всех страниц
 public abstract class AbstractPage {
 
     protected static WebDriver driver;
 
-    public AbstractPage(WebDriver driver){
+    public AbstractPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
 
@@ -20,11 +28,19 @@ public abstract class AbstractPage {
         driver = webDriver;
     }
 
-    @FindBy(xpath =  "//a[@class='nav-link dropdown-toggle']")
-    private  WebElement LOG_IN;
+    @FindBy(xpath = "//a[@class='nav-link dropdown-toggle']")
+    private WebElement LOG_IN;
 
-    public void clickLogIn(){
+    @Step("Кликаем на кнопку авторизации")
+    public void clickLogIn() {
         LOG_IN.click();
     }
+
+    @Attachment(value = "screenshot", type = "image/png")
+    public byte[] saveScreenshot(){
+        return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
+    }
+
+
 
 }

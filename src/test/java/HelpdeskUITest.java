@@ -1,15 +1,13 @@
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
 import pages.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.concurrent.TimeUnit;
 
 public class HelpdeskUITest {
@@ -33,9 +31,14 @@ public class HelpdeskUITest {
         AbstractPage.setDriver(driver);
         driver.get(System.getProperty("site.url"));
     }
+    @After
+    public void afterTest(){
+        driver.quit();
+    }
+
 
     @Test
-    public void createTicketTest() throws IOException {
+    public void createTicketTest() {
 
         MainPage mainPage = new MainPage(driver);
         mainPage.inputQueue("Some Product")
@@ -54,7 +57,7 @@ public class HelpdeskUITest {
         loginPage.login(System.getProperty("user"), System.getProperty("password"));
 
         TicketsPage ticketsPage = new TicketsPage(driver);
-        ticketsPage.inSearch("user@gmail.com").useButtonGo();
+        ticketsPage.searchField("user@gmail.com").useButtonGo();
 
         SearchPage searchPage = new SearchPage(driver);
         searchPage.openTicket();
@@ -67,7 +70,8 @@ public class HelpdeskUITest {
 
         Assert.assertEquals(mainPage.getParameters(), editPage.getTicket());
 
-        driver.close();
+
+
     }
 
 }
