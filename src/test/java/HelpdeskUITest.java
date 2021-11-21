@@ -1,3 +1,4 @@
+import io.qameta.allure.Story;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,7 +37,7 @@ public class HelpdeskUITest {
         driver.quit();
     }
 
-
+    @Story(value = "Отправка тикета и правильность заполнения")
     @Test
     public void createTicketTest() {
 
